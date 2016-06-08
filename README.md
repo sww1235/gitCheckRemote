@@ -7,6 +7,10 @@ needing to be pulled, to uncommitted files, etc.
 
 It will then allow you to specify what options you want to take based on the issues it found including a pull all command. (this can also be done using a flag)
 
+# Usage
+
+the file [gitCheckRemote](../gitCheckRemote.sh) is the full script. Any other script files are for reference only. 
+
 # Locations of Shameless Code Stealing
 
 - <http://stackoverflow.com/questions/11981716/how-to-quickly-find-all-git-repos-under-a-directory>
