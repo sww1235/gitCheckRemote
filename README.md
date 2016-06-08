@@ -9,7 +9,7 @@ It will then allow you to specify what options you want to take based on the iss
 
 # Usage
 
-the file [gitCheckRemote](../gitCheckRemote.sh) is the full script. Any other script files are for reference only. 
+the file [gitCheckRemote](./gitCheckRemote.sh) is the full script. Any other script files are for reference only. 
 
 # Locations of Shameless Code Stealing
 
