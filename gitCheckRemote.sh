@@ -6,7 +6,7 @@ let count_changed=0
 let count_unchanged=0
 
 # Set to 1 for more verbose output:
-let verbose=1
+let verbose=0
 
 # Find git repos and loop over them:
 for repo in `find . -type d -name ".git"` # find returns a relative path with the .git directory at the 
@@ -17,8 +17,11 @@ do
     dir=`echo ${repo} | sed -e 's/\/.git/\//'` #replaces the /.git on the end of the returned path with /
     cd ${dir}
     
+    # update remote refs
+    git remote update -v
+    
     # If there are changes, print some status and branch info of this repo:
-    git status -porcelain | grep -v '??' &> /dev/null && {
+    git status --porcelain | grep -v '??' &> /dev/null && { # first has to succeed for second command to run
 	echo -e "\n\n \E[1;31m ${dir}\E[0m"
 	git branch -vvra
 	git status -s | grep -v '??'
