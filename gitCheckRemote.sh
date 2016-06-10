@@ -18,27 +18,28 @@ do
     cd ${dir}
 
     # update remote refs
-    git remote -v update
+    git remote -v update &> /dev/null
+
     # command to check if pull is necessary
     pullNeeded=$(git rev-list HEAD..HEAD@{upstream} | wc -l | awk '{print $1}')
 
     # command to check if push is necessary
     pushNeeded=$(git rev-list HEAD@{upstream}..HEAD | wc -l | awk '{print $1}')
 
-    printf 'pullNeeded: %s, pushNeeded: %s' $pullNeeded $pushNeeded
-  #   # If there are changes, print some status and branch info of this repo:
-  #   git status --porcelain | grep -v '??' &> /dev/null && { # first has to succeed for second command to run
-	# echo "${dir}"
-	# git branch -vvra
-  # git status
-	# let count_changed=${count_changed}+1
-  #   }
-  #
-  #   # If verbose, print info in the case of no changes:
-  #   git status -s | grep -v '??' &> /dev/null || {
-	# if [ ${verbose} -ne 0 ]; then echo "Nothing to do for ${dir}"; fi
-	# let count_unchanged=${count_unchanged}+1
-  #   }
+    printf 'pullNeeded: %s pushNeeded: %s\n' ${pullNeeded} ${pushNeeded}
+    # If there are changes, print some status and branch info of this repo:
+    if [ ${pullNeeded} -ne "0" ] || [ ${pushNeeded} -ne "0" ]; then
+	    echo "${dir} needs attention"
+	    git branch -vvra
+      git status
+	    let count_changed=${count_changed}+1
+    fi
+
+    # If verbose, print info in the case of no changes:
+    if [ ${pullNeeded} -eq "0" ] && [ ${pushNeeded} -eq "0" ] && [ ${verbose} -ne 0 ]; then
+	    echo "Nothing to do for ${dir}"
+	    let count_unchanged=${count_unchanged}+1
+    fi
 
     # cd back:
     cd - &> /dev/null
