@@ -17,25 +17,25 @@ let verbose=0
 for repo in `find . -type d -name ".git"`
 do
     let count_all=${count_all}+1
-    
+
     # cd to the dir that contains .git/:
     dir=`echo ${repo} | sed -e 's/\/.git/\//'`
     cd ${dir}
-    
+
     # If there are changes, print some status and branch info of this repo:
     git status -s | grep -v '??' &> /dev/null && {
-	echo -e "\n\n \E[1;31m ${dir}\E[0m"
+	echo -e "\n\n \E[1;31m $HOME\E[0m" #-e is non POSIX, recommend using printf, formatting code prints text in red
 	git branch -vvra
 	git status -s | grep -v '??'
 	let count_changed=${count_changed}+1
     }
-    
+
     # If verbose, print info in the case of no changes:
     git status -s | grep -v '??' &> /dev/null || {
 	if [ ${verbose} -ne 0 ]; then echo "Nothing to do for ${dir}"; fi
 	let count_unchanged=${count_unchanged}+1
     }
-    
+
     # cd back:
     cd - &> /dev/null
 done
