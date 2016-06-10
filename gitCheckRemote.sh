@@ -24,7 +24,7 @@ do
     git status --porcelain | grep -v '??' &> /dev/null && { # first has to succeed for second command to run
 	echo -e "\n\n${dir}"
 	git branch -vvra
-	git status -s | grep -v '??'
+  git status
 	let count_changed=${count_changed}+1
     }
 
