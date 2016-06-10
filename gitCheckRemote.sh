@@ -22,7 +22,7 @@ do
 
     # If there are changes, print some status and branch info of this repo:
     git status --porcelain | grep -v '??' &> /dev/null && { # first has to succeed for second command to run
-	echo -e "\n\n \E[1;31m ${dir}\E[0m"
+	echo -e "\n\n${dir}"
 	git branch -vvra
 	git status -s | grep -v '??'
 	let count_changed=${count_changed}+1
