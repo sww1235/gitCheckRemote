@@ -35,12 +35,14 @@ do
       printf "\n status info\n\n"
       git status
 	    let count_changed=${count_changed}+1
+      printf "%s\n" "--------------------------------------------------------------------------------"
     fi
 
     # If verbose, print info in the case of no changes:
     if [ ${pullNeeded} -eq "0" ] && [ ${pushNeeded} -eq "0" ] && [ ${verbose} -ne 0 ]; then
 	    printf "Nothing to do for %s\n\n" ${dir}
 	    let count_unchanged=${count_unchanged}+1
+      printf "%s\n" "--------------------------------------------------------------------------------"
     fi
 
     # cd back:
