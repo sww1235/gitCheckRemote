@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#TODO fix remote checking for local only repositories
 # Initialise counters:
 let count_all=0
 let count_changed=0
@@ -38,17 +39,18 @@ do
       printf "%s\n" "--------------------------------------------------------------------------------"
     fi
 
-    # If verbose, print info in the case of no changes:
-    if [ ${pullNeeded} -eq "0" ] && [ ${pushNeeded} -eq "0" ] && [ ${verbose} -ne 0 ]; then
-	    printf "Nothing to do for %s\n\n" ${dir}
-	    let count_unchanged=${count_unchanged}+1
-      printf "%s\n" "--------------------------------------------------------------------------------"
-    fi
+
+    # # If verbose, print info in the case of no changes:
+    # if [ ${pullNeeded} -eq "0" ] && [ ${pushNeeded} -eq "0" ] && [ ${verbose} -ne 0 ]; then
+	  #   printf "Nothing to do for %s\n\n" ${dir}
+	  #   let count_unchanged=${count_unchanged}+1
+    #   printf "%s\n" "--------------------------------------------------------------------------------"
+    # fi
 
     # cd back:
     cd - &> /dev/null
 done
-
+let count_unchanged=${count_all}-${count_changed}
 # Report status and exit:
 echo -ne "\n\n${count_all} git repositories found: "
 echo -ne "${count_changed} have changes, "
