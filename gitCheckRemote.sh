@@ -26,18 +26,20 @@ do
     # command to check if push is necessary
     pushNeeded=$(git rev-list HEAD@{upstream}..HEAD | wc -l | awk '{print $1}')
 
-    printf 'pullNeeded: %s pushNeeded: %s\n' ${pullNeeded} ${pushNeeded}
+    #printf 'pullNeeded: %s pushNeeded: %s\n' ${pullNeeded} ${pushNeeded}
     # If there are changes, print some status and branch info of this repo:
     if [ ${pullNeeded} -ne "0" ] || [ ${pushNeeded} -ne "0" ]; then
-	    echo "${dir} needs attention"
+	    printf "\n%s needs attention\n" ${dir}
+      printf "\n branch info\n\n"
 	    git branch -vvra
+      printf "\n status info\n\n"
       git status
 	    let count_changed=${count_changed}+1
     fi
 
     # If verbose, print info in the case of no changes:
     if [ ${pullNeeded} -eq "0" ] && [ ${pushNeeded} -eq "0" ] && [ ${verbose} -ne 0 ]; then
-	    echo "Nothing to do for ${dir}"
+	    printf "Nothing to do for %s\n\n" ${dir}
 	    let count_unchanged=${count_unchanged}+1
     fi
 
